@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+  web:
+    build: .
+    command: >
+      bash -c "sh start_django.sh"
+    volumes:
+      - .:/kode
+      - ~/.ssh:/root/.ssh:ro
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
