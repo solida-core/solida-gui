@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+{% load static from staticfiles %}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,18 +21,13 @@
 </head>
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <span class="navbar-brand col-1 mb-0 h1">:: SOLIDA ::</span>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
+        <div class="container">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item {% if request.path == '/' %} active{% endif %}">
                     <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown {% if 'pipelines' in request.path == '/' %} active{% endif %}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarPipelines" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Pipelines
@@ -42,7 +38,7 @@
                         <a class="dropdown-item" href="#">Adda new</a>
                     </div>
                 </li>
-                 <li class="nav-item dropdown">
+                 <li class="nav-item dropdown {% if 'profiles' in request.path == '/' %} active{% endif %}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarProfiles" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Profiles
@@ -53,13 +49,14 @@
                         <a class="dropdown-item" href="#">Adda new</a>
                     </div>
                 </li>
-                 <li class="nav-item active">
+                 <li class="nav-item {% if 'docs' in request.path == '/' %} active{% endif %}">
                     <a class="nav-link" href="#">Docs <span class="sr-only">(current)</span></a>
                 </li>
-                 <li class="nav-item active">
+                 <li class="nav-item {% if 'about' in request.path == '/' %} active{% endif %}">
                     <a class="nav-link" href="#">About<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
+        </div>
         </div>
     </nav>
 </header>
@@ -67,6 +64,15 @@
 <div id="solida-gui" class="container">
     <div class="row justify-content-center" style="padding-top:20px;">
         {% block content %}(no content){% endblock %}
+    </div>
+</div>
+<div class="bg-700" style="margin-top:35px; margin-bottom:0; padding-bottom:15px;">
+    <div class="container text-center text-xs">
+        <div>
+            <img src="{% static "images/CRS4-colori-small.png" %}" alt="crs4-logo">
+        </div>
+<!--        &lt;!&ndash;<div style="margin-top:5px; margin-bottom:5px;"><h7>NEXT GENERATION SEQUENCING CORE</h7></div>&ndash;&gt;-->
+<!--        <div><div><h6><span style="line-height:5px;margin-top:50px;margin-right:10px;">Powered by Bika Lab Systems</span>&nbsp;<img src="assets/img/logos/logo_bika_footer.png"></h6></div><div></div></div>-->
     </div>
 </div>
 </body>
