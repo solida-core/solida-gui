@@ -8,7 +8,6 @@ RUN apt-get install -y apt-utils rsync
 RUN pip install -r requirements.txt
 RUN solida info
 COPY . /kode/
-
 #
 
 
