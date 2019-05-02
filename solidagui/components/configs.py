@@ -49,6 +49,9 @@ class YamlConfigFile(object):
         else:
             self.logger.warning('section {} not found'.format(section_label))
 
+    def set_value(self, label, value):
+        self.conf[label] = value
+
     def is_section_present(self, section_label):
         if section_label in self.conf:
             return True
@@ -73,3 +76,31 @@ class SolidaConfigFile(YamlConfigFile):
     def get_vars_section(self, label='default_vars'):
         return self.get_section(label)
 
+
+class ProfileConfigFile(YamlConfigFile):
+    def __init__(self, yaml_file, loglevel='INFO'):
+        YamlConfigFile.__init__(self, yaml_file, loglevel)
+
+    def get_project_section(self):
+        return dict(project_name=self.get_section('project_name'),
+                    project_email_address=self.get_section('project_email_address'),
+                    project_dir=self.get_section('project_dir'),
+                    tmp_dir=self.get_section('tmp_dir'))
+
+    def get_remote_section(self):
+        return dict(host=self.get_section('host'),
+                    remote_user=self.get_section('remote_user'),
+                    connection=self.get_section('connection'))
+
+    def set_remote_section(self, remote_section):
+        self.__set_section(remote_section)
+
+    def set_project_section(self, project_section):
+        self.__set_section(project_section)
+
+    def set_vars_section(self, vars_section):
+        self.__set_section(vars_section)
+
+    def __set_section(self, section):
+        for k, v in section.items():
+            self.set_value(k, v)

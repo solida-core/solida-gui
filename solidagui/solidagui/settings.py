@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'extended_settings',
     'pagination_bootstrap',
+    'solidagui',
 ]
 
 MIDDLEWARE = [

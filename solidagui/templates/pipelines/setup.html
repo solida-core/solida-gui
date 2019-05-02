@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ to_do }}
+<div class="card border-light">
+    <div class="card-header"><h5><a href="{{ pipeline.url }}" target="_blank"> {{ pipeline.short_url }}</a></h5></div>
+    <div class="card-body ">
+        <h4 class="card-title">{{ pipeline.id }}</h4>
+        <p class="card-text">{{ pipeline.description }}</p>
+        <form id="setupProfile" class="needs-validation"
+              method="post" novalidate>
+            {% csrf_token %}
+            <fieldset >
+                <input type="hidden" id="to_do" name="to_do">
+                <div class="row">
+                    <div class="form-row col-sm-12 mb-3">
+                        <div class="col-sm-4">
+                            <label for="profile_selected">Profiles</label>
+                            <select class="form-control form-control-sm" id="profile_selected" name="profile_selected">
+                                <option value="" {% if not profile_id %} selected {% endif %}>Create new...</option>
+                                {% for p in pipeline.profiles %}
+                                <option value="{{ p.id }}" {% if profile_id == p.id %} selected {% endif %}>{{ p.id }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="profile_name">Profile Name<span class="text-info"> (Required)</span></label>
+                            <input type="text" class="form-control form-control-sm" id="profile_name"
+                                   name="profile_name"
+                                   placeholder="Type here the profile name..."
+                                   {% if profile_id %} value="{{ profile_id }}" {% else %} value="" {% endif %} required>
+                            <div class="invalid-feedback">
+                                Field required. Please type a valid profile name.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 mt-4">
+                            <a class="btn btn-success {% if not profile_id %} disabled {% endif %}" id="btn_save_profile">Save</a>
+                            <span >&nbsp;</span>
+                            <a class="btn btn-primary {% if not profile_id %} disabled {% endif %}" id="btn_deploy">Deploy</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row border border-info" >
+                            <div class="col-sm-12 mt-2"><h5 class="text-warning">Remote Section</h5></div>
+                            <div class="form-row col-sm-12 mb-3">
+                                {% for k,v in profile.remote_section.items %}
+                                <div class="col-md-4">
+                                     <label class="col-form-label" for="{{ k }}">{{ v.label }}<span class="text-info"> (Required)</span></label>
+                                        <input type="text" class="form-control form-control-sm" placeholder="{{ v.value }}"
+                                               {% if profile_id %} value="{{ v.value }}" {% endif %}
+                                               id="{{ k }}" name="{{ k }}" required >
+                                        <div class="invalid-feedback">
+                                            Field required. Please type a valid {{ v.label }}
+                                        </div>
+                                </div>
+                                 {% endfor %}
+                            </div>
+                </div>
+                <div class="row border border-info mt-2">
+                    <div class="col-sm-12 mt-2"><h5 class="text-warning">Project Section</h5></div>
+                     {% for k,v in profile.project_section.items %}
+                            <div class="form-group col-sm-6">
+                                <label class="col-form-label" for="{{ k }}">{{ v.label }}<span class="text-info"> (Required)</span></label>
+                                <input type="text" class="form-control form-control-sm" placeholder="{{ v.value }}"
+                                       {% if profile_id %} value="{{ v.value }}" {% endif %}
+                                       id="{{ k }}" name="{{ k }}" required >
+                                <div class="invalid-feedback">
+                                    Field required. Please type a valid {{ v.label }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                </div>
+                <div class="row border border-info mt-2">
+                    <div class="col-sm-12 mt-2"><h5 class="text-warning">Vars Section</h5></div>
+                    {% for k,v in profile.vars_section.items %}
+                            {% if 'project_' not in k %}
+                            <div class="form-group col-sm-4">
+                                <label class="col-form-label" for="{{ k }}">{{ v.label }}</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="{{ v.value }}"
+                                       {% if profile_id %} value="{{ v.value }}" {% endif %}
+                                       id="{{ k }}" name="{{ k }}" />
+                            </div>
+                            {% endif %}
+                    {% endfor %}
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    $("#profile_selected").bind('change', function() {
+        var profile_name = $("#profile_selected").val();
+        $('#to_do').val("load_profile");
+        $("#setupProfile").attr('action', '/pipelines/{{ pipeline.id }}/setup/');
+        $("#setupProfile").submit();
+    });
+
+    $("#profile_name").bind("keyup keydown keypress change blur", function() {
+        if ($("#profile_name").val() && $("#profile_name").val()!="") {
+            $("#btn_deploy").removeClass("disabled");
+            $("#btn_save_profile").removeClass("disabled");
+        }
+        else {
+            $("#btn_deploy").addClass("disabled");
+            $("#btn_save_profile").addClass("disabled");
+        }
+    });
+
+    $("#btn_deploy").on('click', function() {
+        this.check = checkup()
+        if (this.check) {
+            console.log("ok");
+        }
+        else {
+            return;
+        }
+    });
+
+    $("#btn_save_profile").on('click', function() {
+        this.check = checkup();
+        if (this.check) {
+            $('#to_do').val("save");
+            $("#setupProfile").attr('action', '/pipelines/{{ pipeline.id }}/setup/');
+            $("#setupProfile").submit();
+        }
+    });
+
+    function checkup() {
+         var check = true;
+
+        $(':input[required]').each(function(i, requiredField) {
+            if ($(requiredField).val().trim() == "") {
+                $(requiredField).removeClass("is-valid");
+                $(requiredField).addClass("is-invalid");
+                check = false;
+
+            }
+            else {
+                 $(requiredField).removeClass("is-invalid");
+                 $(requiredField).addClass("is-valid");
+            }
+        });
+        return check;
+    }
+
+
+</script>
+
+{% endblock %}

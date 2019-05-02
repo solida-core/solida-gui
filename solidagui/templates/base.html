@@ -33,9 +33,11 @@
                         Pipelines
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarPipelines">
-                        <a class="dropdown-item" href="{% url 'pipelines.browse' %}">Browse</a>
+                        <a class="dropdown-item" href="{% url 'pipelines.browse' %}">
+                            <span class="{% if 'pipelines/browse' in request.path %}text-success{% endif %}">Browse</span>
+                        </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Adda new</a>
+                        <a class="dropdown-item" href="#">Add new</a>
                     </div>
                 </li>
                  <li class="nav-item dropdown {% if 'profiles' in request.path %} active{% endif %}">
@@ -62,12 +64,12 @@
 </header>
 <body>
 <div id="solida-gui" class="container">
-    <div class="row justify-content-center" style="padding-top:20px;">
+    <div class="row justify-content-center mt-4">
         {% block content %}(no content){% endblock %}
     </div>
 </div>
-<div class="bg-700" style="margin-top:35px; margin-bottom:0; padding-bottom:15px;">
-    <div class="container text-center text-xs">
+<div class="bg-700">
+    <div class="container text-center text-xs mt-4">
         <div>
             <img src="{% static "images/CRS4-colori-small.png" %}" alt="crs4-logo">
         </div>
