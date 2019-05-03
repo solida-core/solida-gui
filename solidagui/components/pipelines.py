@@ -32,6 +32,10 @@ class Pipeline(object):
 
         return self.get_profile(profile_id)
 
+    def deploy_pipeline(self, profile_id):
+        profile = self.get_profile(profile_id)
+        return profile.deploy()
+
     def __get_pipeline_dict(self, pipeline_id):
         return SolidaConfigFile(yaml_file=settings.SOLIDA_CONFIG_FILE).get_pipelines_section().get(pipeline_id)
 

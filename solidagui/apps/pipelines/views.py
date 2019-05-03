@@ -5,7 +5,6 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.template import loader, RequestContext
 
-
 class BrowseView(TemplateView):
     template_name = 'pipelines/browse.html'
 
@@ -43,5 +42,32 @@ def setup(request, pipeline_id):
                    )
 
     return HttpResponse(template.render(context, request))
+
+
+def deploy(request, pipeline_id):
+
+    def retrieve_result(result):
+        return dict(
+            stdout_data=result.get('stdout_data').decode().split('\n') if result.get('stdout_data') else None,
+            stderr_data=result.get('stderr_data').decode().split('\n') if result.get('stderr_data') else None,
+            exit_code=int(result.get('exit_code')),
+            success=True if result.get('stdout_data') and 'failed=0' in result.get('stdout_data').decode() else False,
+            last_row=result.get('stdout_data').decode().split('\n')[-1]
+        )
+
+    template = loader.get_template('pipelines/deploy.html')
+
+    profile_id = request.POST.dict().get("profile_name")
+    pipeline = Pipeline(pipeline_id=pipeline_id, with_profiles=True)
+    pipeline.create_profile(profile_id, request.POST.dict())
+    profile = pipeline.get_profile(profile_id=profile_id)
+    result = profile.deploy()
+    context = dict(pipeline=pipeline,
+                   profile=profile,
+                   result=retrieve_result(result))
+
+    return HttpResponse(template.render(context, request))
+
+
 
 

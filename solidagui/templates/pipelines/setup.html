@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{ to_do }}
 <div class="card border-light">
     <div class="card-header"><h5><a href="{{ pipeline.url }}" target="_blank"> {{ pipeline.short_url }}</a></h5></div>
     <div class="card-body ">
@@ -112,10 +111,9 @@
     $("#btn_deploy").on('click', function() {
         this.check = checkup()
         if (this.check) {
-            console.log("ok");
-        }
-        else {
-            return;
+            $('#to_do').val("deploy");
+            $("#setupProfile").attr('action', '/pipelines/{{ pipeline.id }}/deploy/');
+            $("#setupProfile").submit();
         }
     });
 

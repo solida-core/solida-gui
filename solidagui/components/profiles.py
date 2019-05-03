@@ -45,6 +45,14 @@ class Profile(object):
         profile.set_vars_section(self.__revert(self.vars_section))
         profile.dump()
 
+    def deploy(self):
+        solida = Solida()
+        return solida.deploy(pipeline_id=self.pipeline_id,
+                             profile_id=self.id,
+                             host=self.remote_section['host']['value'],
+                             user=self.remote_section['remote_user']['value'],
+                             connection=self.remote_section['connection']['value'])
+
     def __get_profile(self, pipeline_id, profile_id):
         config_file = self.__get_config_file(pipeline_id, profile_id)
 
@@ -105,4 +113,3 @@ class Profiles(object):
 
     def count_profiles(self):
         return len(self.profiles)
-

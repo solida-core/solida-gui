@@ -1,7 +1,5 @@
-import os
 import subprocess
 import shlex
-from django.conf import settings
 
 from components.logging import Logging
 
@@ -11,46 +9,46 @@ class Solida(object):
         self.launcher = Launcher()
 
     def create_profile(self, pipeline_id, profile_id):
-        self.launcher.create_profile(pipeline=pipeline_id,
-                                     profile=profile_id)
+        return self.launcher.create_profile(pipeline_id=pipeline_id,
+                                            profile_id=profile_id)
 
     def deploy(self, pipeline_id, profile_id, host, user, connection):
-        self.launcher.deploy_project(pipeline=pipeline_id,
-                                     profile=profile_id,
-                                     host=host,
-                                     user=user,
-                                     connection=connection)
+        return self.launcher.deploy_project(pipeline_id=pipeline_id,
+                                            profile_id=profile_id,
+                                            host=host,
+                                            user=user,
+                                            connection=connection)
 
 
 class Launcher(object):
     def __init__(self, loglevel='INFO'):
         self.logger = Logging(self.__class__.__name__, level=loglevel).get_logger()
 
-    def create_profile(self, pipeline, profile):
-        params = dict(pipeline=pipeline,
-                      profile=profile)
+    def create_profile(self, pipeline_id, profile_id):
+        params = dict(pipeline_id=pipeline_id,
+                      profile_id=profile_id)
         cmd = self.__get_cmd(self.create_profile.__name__, params)
-        self.__run(cmd=cmd)
+        return self.__run(cmd=cmd)
 
-    def deploy_project(self, pipeline, profile, host, user, connection):
-        params = dict(pipeline=pipeline,
-                      profile=profile,
+    def deploy_project(self, pipeline_id, profile_id, host, user, connection):
+        params = dict(pipeline_id=pipeline_id,
+                      profile_id=profile_id,
                       host=host,
                       user=user,
                       connection=connection)
         cmd = self.__get_cmd(self.deploy_project.__name__, params)
-        self.__run(cmd=cmd)
+        return self.__run(cmd=cmd)
 
     def __get_cmd(self, cmd, params):
         cmds = dict(
             create_profile=["solida setup",
-                            "-l {}".format(params.get('pipeline')),
-                            "-p {}".format(params.get('profile')),
+                            "-l {}".format(params.get('pipeline_id')),
+                            "-p {}".format(params.get('profile_id')),
                             "--create-profile"],
 
             deploy_project=["solida setup",
-                            "-l {}".format(params.get('pipeline')),
-                            "-p {}".format(params.get('profile')),
+                            "-l {}".format(params.get('pipeline_id')),
+                            "-p {}".format(params.get('profile_id')),
                             "--deploy",
                             "--host {}".format(params.get('host')),
                             "--remote-user {}".format(params.get('user')),
@@ -67,14 +65,16 @@ class Launcher(object):
             process = subprocess.Popen(cmd,
                                        stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT)
-            output = process.communicate()[0]
-            ret = process.wait()
-            return True
+            std_data = process.communicate()
+            exit_code = process.wait()
+            return dict(stdout_data=std_data[0],
+                        stderr_data=std_data[1],
+                        exit_code=exit_code)
 
         except subprocess.CalledProcessError as e:
-            self.logger.info(e)
+            self.logger.warining(e)
             if e.output:
-                self.logger.info("command output: %s", e.output)
+                self.logger.warning("command output: %s", e.output)
             else:
-                self.logger.info("no command output available")
+                self.logger.warning("no command output available")
             return False
