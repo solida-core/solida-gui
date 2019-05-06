@@ -18,8 +18,10 @@
                             <select class="form-control form-control-sm" id="profile_selected" name="profile_selected">
                                 <option value="" {% if not profile_id %} selected {% endif %}>Create new...</option>
                                 {% for p in pipeline.profiles %}
+                                {% if p.id != 'sample' %}
                                 <option value="{{ p.id }}" {% if profile_id == p.id %} selected {% endif %}>{{ p.id }}
                                 </option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
