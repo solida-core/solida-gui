@@ -52,7 +52,7 @@ def deploy(request, pipeline_id):
             stderr_data=result.get('stderr_data').decode().split('\n') if result.get('stderr_data') else None,
             exit_code=int(result.get('exit_code')),
             success=True if result.get('stdout_data') and 'failed=0' in result.get('stdout_data').decode() else False,
-            last_row=result.get('stdout_data').decode().split('\n')[-1]
+            last_row=result.get('stdout_data').decode().split('\n')[-5]
         )
 
     template = loader.get_template('pipelines/deploy.html')

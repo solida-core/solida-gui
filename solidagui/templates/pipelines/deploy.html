@@ -9,23 +9,24 @@
     <div class="card-body">
         <h4 class="card-title">{% if result.success %} Successful! {% else %} Failed! {% endif %}</h4>
         <div class="card-text">
+
             {{ result.last_row }}
             <button class="btn btn-secondary" data-toggle="modal" data-target="#ModalLog">View details</button>
         </div>
     </div>
 </div>
 <div class="modal fade" id="ModalLog" tabindex="-1" role="dialog" aria-labelledby="ModalLogTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLogTitle">Result of deployment</h5>
+        <h5 class="modal-title" id="ModalLogTitle">Logging</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
           {% for row in result.stdout_data %}
-            <div class="row"><pre class="text-primary">{{ row }}</pre></div>
+            <div class="row"><pre class="text-white small">{{ row }}</pre></div>
           {% endfor %}
       </div>
       <div class="modal-footer">

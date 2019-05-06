@@ -27,31 +27,10 @@
                 <li class="nav-item {% if request.path == '/' %} active{% endif %}">
                     <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown {% if 'pipelines' in request.path %} active{% endif %}">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarPipelines" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Pipelines
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarPipelines">
-                        <a class="dropdown-item" href="{% url 'pipelines.browse' %}">
-                            <span class="{% if 'pipelines/browse' in request.path %}text-success{% endif %}">Browse</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Add new</a>
-                    </div>
+                 <li class="nav-item {% if 'pipelines' in request.path %} active{% endif %}">
+                    <a class="nav-link" href="{% url 'pipelines.browse' %}">Pipelines <span class="sr-only">(current)</span></a>
                 </li>
-                 <li class="nav-item dropdown {% if 'profiles' in request.path %} active{% endif %}">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarProfiles" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Profiles
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarProfiles">
-                        <a class="dropdown-item" href="#">Browse</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Adda new</a>
-                    </div>
-                </li>
-                 <li class="nav-item {% if 'docs' in request.path %} active{% endif %}">
+                <li class="nav-item {% if 'docs' in request.path %} active{% endif %}">
                     <a class="nav-link" href="#">Docs <span class="sr-only">(current)</span></a>
                 </li>
                  <li class="nav-item {% if 'about' in request.path %} active{% endif %}">
@@ -73,8 +52,19 @@
         <div>
             <img src="{% static "images/CRS4-colori-small.png" %}" alt="crs4-logo">
         </div>
-<!--        &lt;!&ndash;<div style="margin-top:5px; margin-bottom:5px;"><h7>NEXT GENERATION SEQUENCING CORE</h7></div>&ndash;&gt;-->
-<!--        <div><div><h6><span style="line-height:5px;margin-top:50px;margin-right:10px;">Powered by Bika Lab Systems</span>&nbsp;<img src="assets/img/logos/logo_bika_footer.png"></h6></div><div></div></div>-->
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="spinnerModal">
+    <div class="modal-dialog modal-dialog-centered text-center" role="document">
+        <div class="modal-body">
+            <h1>Wait while loading...</h1>
+            <div class="spinner-border text-info"
+                 style="width: 5rem; height: 5rem;"
+                 role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <h3>It may take a long time</h3>
+        </div>
     </div>
 </div>
 </body>

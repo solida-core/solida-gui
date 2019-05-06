@@ -90,10 +90,13 @@
     </div>
 </div>
 <script>
+    $('#spinnerModal').modal('hide');
+
     $("#profile_selected").bind('change', function() {
         var profile_name = $("#profile_selected").val();
         $('#to_do').val("load_profile");
         $("#setupProfile").attr('action', '/pipelines/{{ pipeline.id }}/setup/');
+        $('#spinnerModal').modal('show');
         $("#setupProfile").submit();
     });
 
@@ -111,6 +114,7 @@
     $("#btn_deploy").on('click', function() {
         this.check = checkup()
         if (this.check) {
+            $('#spinnerModal').modal('show');
             $('#to_do').val("deploy");
             $("#setupProfile").attr('action', '/pipelines/{{ pipeline.id }}/deploy/');
             $("#setupProfile").submit();
@@ -120,6 +124,7 @@
     $("#btn_save_profile").on('click', function() {
         this.check = checkup();
         if (this.check) {
+            $('#spinnerModal').modal('show');
             $('#to_do').val("save");
             $("#setupProfile").attr('action', '/pipelines/{{ pipeline.id }}/setup/');
             $("#setupProfile").submit();
@@ -143,8 +148,6 @@
         });
         return check;
     }
-
-
 </script>
 
 {% endblock %}

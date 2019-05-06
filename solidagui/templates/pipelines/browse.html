@@ -17,7 +17,7 @@
                     <p class="card-text">{{ p.description }}</p>
                 </div>
                 <div class="card-footer bg-light">
-                    <a class="btn btn-primary" href="/pipelines/{{ p.id }}/setup">Setup & Deploy</a>
+                    <button class="btn btn-primary" onclick="goto('{{ p.id }}');">Setup & Deploy</button>
                 </div>
             </div>
         </div>
@@ -28,7 +28,26 @@
 <div>
 {% paginate %}
 </div>
-
+<div class="modal fade" tabindex="-1" role="dialog" id="spinnerModal">
+    <div class="modal-dialog modal-dialog-centered text-center" role="document">
+        <div class="modal-body">
+            <h1>Wait while loading...</h1>
+            <div class="spinner-border text-info"
+                 style="width: 5rem; height: 5rem;"
+                 role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <h3>It may take a long time</h3>
+        </div>
+    </div>
+</div>
+<script>
+    $('#spinnerModal').modal('hide');
+    function goto(id) {
+        $('#spinnerModal').modal('show');
+        window.location.href = "/pipelines/"+id+"/setup";
+    }
+</script>
 
 {% endblock %}
 
