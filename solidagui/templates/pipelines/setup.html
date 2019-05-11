@@ -47,6 +47,18 @@
                             <div class="col-sm-12 mt-2"><h5 class="text-warning">Remote Section</h5></div>
                             <div class="form-row col-sm-12 mb-3">
                                 {% for k,v in profile.remote_section.items %}
+                                {% if k == 'connection' %}
+                                 <div class="col-md-4">
+                                     <label class="col-form-label" for="{{ k }}">{{ v.label }}<span class="text-info"> (Required)</span></label>
+                                        <select class="form-control form-control-sm" placeholder="{{ v.value }}" id="{{ k }}" name="{{ k }}" required >
+                                            <option value="ssh" {% if v.label == "ssh" %} selected {% endif %}>SSH</option>
+                                            <option value="local" {% if v.label == "local" %} selected {% endif %}>Local</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Field required. Please type a valid {{ v.label }}
+                                        </div>
+                                </div>
+                                {% else %}
                                 <div class="col-md-4">
                                      <label class="col-form-label" for="{{ k }}">{{ v.label }}<span class="text-info"> (Required)</span></label>
                                         <input type="text" class="form-control form-control-sm" placeholder="{{ v.value }}"
@@ -56,6 +68,7 @@
                                             Field required. Please type a valid {{ v.label }}
                                         </div>
                                 </div>
+                                {% endif %}
                                  {% endfor %}
                             </div>
                 </div>
