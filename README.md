@@ -46,5 +46,5 @@ Bring up the containers:
 docker-compose up
 ```
 
-Point your browser to:  
+Point your browser to: 
 `http://0.0.0.0:8000` 
