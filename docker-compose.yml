@@ -6,10 +6,11 @@ services:
   web:
     build: .
     command: >
-      bash -c "sh start_django.sh"
+      bash -c "sh init_conda.sh && sh start_django.sh"
     volumes:
-      - ~/solida-core:/root
       - ~/solida-core/projects:/root/projects
+      - ~/solida-core/.tmp:/root/.tmp
+      - ~/solida-core/profiles:/root/.local/share/solida/
       - .:/kode
       - ~/.ssh:/root/.ssh:ro
 

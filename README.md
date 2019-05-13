@@ -19,18 +19,21 @@ See [docker-compose docs](https://docs.docker.com/compose/reference/overview/)
 
 Create the workdir tree:
 ```bash
-mkdir ~/solida-core             #path where installing solida, configs file, profiles and pipelines
-mkdir ~/solida-core/projects    #path where deploying projects in localhost
+mkdir ~/solida-core             # root path 
+mkdir ~/solida-core/projects    # path where deploying projects in localhost
+mkdir ~/solida-core/profiles    # path where storing profiles in localhost
+mkdir ~/solida-core/.tmp        # path where storing temporary files 
 ```
 
 > You can change these paths as you prefer, but remember to modify docker-compose.yaml file accordly
 > ```yaml
 > ...
 > volumes:
->      - ~/solida-core:/root
 >      - ~/solida-core/projects:/root/projects
+>      - ~/solida-core/.tmp:/root/.tmp
+>      - ~/solida-core/profiles:/root/.local/share/solida/
 > ...
->```
+```
 
 Clone the repository:  
 ```bash

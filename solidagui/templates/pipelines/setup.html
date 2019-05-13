@@ -18,10 +18,8 @@
                             <select class="form-control form-control-sm" id="profile_selected" name="profile_selected">
                                 <option value="" {% if not profile_id %} selected {% endif %}>Create new...</option>
                                 {% for p in pipeline.profiles %}
-                                {% if p.id != 'sample' %}
                                 <option value="{{ p.id }}" {% if profile_id == p.id %} selected {% endif %}>{{ p.id }}
                                 </option>
-                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -32,7 +30,8 @@
                                    placeholder="Type here the profile name..."
                                    {% if profile_id %} value="{{ profile_id }}" {% else %} value="" {% endif %} required>
                             <div class="invalid-feedback">
-                                Field required. Please type a valid profile name.
+                                Field required. Please type a valid profile name. <br>
+                                Must be different from <kbd>{{ sample_profile }}</kbd>
                             </div>
                         </div>
 
@@ -51,8 +50,10 @@
                                  <div class="col-md-4">
                                      <label class="col-form-label" for="{{ k }}">{{ v.label }}<span class="text-info"> (Required)</span></label>
                                         <select class="form-control form-control-sm" placeholder="{{ v.value }}" id="{{ k }}" name="{{ k }}" required >
-                                            <option value="ssh" {% if v.label == "ssh" %} selected {% endif %}>SSH</option>
-                                            <option value="local" {% if v.label == "local" %} selected {% endif %}>Local</option>
+                                            <option value="" {% if not profile_id %} selected {% endif %}>Choose deployment...</option>
+                                            {% for m in deployment_modes %}
+                                            <option value="{{m.value}}" {% if v.value == m.value and profile_id %} selected {% endif %}>{{ m.label }}</option>
+                                            {% endfor %}
                                         </select>
                                         <div class="invalid-feedback">
                                             Field required. Please type a valid {{ v.label }}
@@ -105,7 +106,12 @@
     </div>
 </div>
 <script>
-    $('#spinnerModal').modal('hide');
+    $(document).ready(function(){
+        manage_connection();
+        $('#spinnerModal').modal('hide');
+    });
+
+
 
     $("#profile_selected").bind('change', function() {
         var profile_name = $("#profile_selected").val();
@@ -113,6 +119,10 @@
         $("#setupProfile").attr('action', '/pipelines/{{ pipeline.id }}/setup/');
         $('#spinnerModal').modal('show');
         $("#setupProfile").submit();
+    });
+
+    $("#connection").bind('change', function() {
+        manage_connection();
     });
 
     $("#profile_name").bind("keyup keydown keypress change blur", function() {
@@ -138,6 +148,7 @@
 
     $("#btn_save_profile").on('click', function() {
         this.check = checkup();
+
         if (this.check) {
             $('#spinnerModal').modal('show');
             $('#to_do').val("save");
@@ -147,10 +158,10 @@
     });
 
     function checkup() {
-         var check = true;
+        var check = true;
 
         $(':input[required]').each(function(i, requiredField) {
-            if ($(requiredField).val().trim() == "") {
+            if ( $(requiredField).val().trim() == "" || ($(requiredField).attr('id') == 'profile_name' && $(requiredField).val().trim() == "{{ sample_profile }}")) {
                 $(requiredField).removeClass("is-valid");
                 $(requiredField).addClass("is-invalid");
                 check = false;
@@ -162,6 +173,25 @@
             }
         });
         return check;
+    }
+
+    function manage_connection() {
+        if ($("#connection").val().trim() == 'local') {
+            $('#host').val("localhost");
+            $('#host').attr("readonly", true);
+            $('#remote_user').val("user");
+            $('#remote_user').attr("readonly", true);
+            $('#project_dir').val("{{ project_dir }}");
+            $('#project_dir').attr("readonly", true);
+            $('#tmp_dir').val("{{ tmp_dir }}");
+            $('#tmp_dir').attr("readonly", true);
+        }
+        else {
+            $('#host').attr("readonly", false);
+            $('#remote_user').attr("readonly", false);
+            $('#project_dir').attr("readonly", false);
+            $('#tmp_dir').attr("readonly", false);
+        }
     }
 </script>
 
