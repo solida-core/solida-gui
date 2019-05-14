@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
-<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+    <!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/darkly/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-w+8Gqjk9Cuo6XH9HKHG5t5I1VR4YBNdPt/29vwgfZR485eoEJZ8rJRbm3TR32P6k" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -19,39 +19,38 @@
             crossorigin="anonymous"></script>
     <title>solida</title>
 </head>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item {% if request.path == '/' %} active{% endif %}">
-                    <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                 <li class="nav-item {% if 'pipelines' in request.path %} active{% endif %}">
-                    <a class="nav-link" href="{% url 'pipelines.browse' %}">Pipelines <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item {% if 'docs' in request.path %} active{% endif %}">
-                    <a class="nav-link" href="#">Docs <span class="sr-only">(current)</span></a>
-                </li>
-                 <li class="nav-item {% if 'about' in request.path %} active{% endif %}">
-                    <a class="nav-link" href="#">About<span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-        </div>
-        </div>
-    </nav>
-</header>
-<body>
-<div id="solida-gui" class="container">
-    <div class="row justify-content-center mt-4">
-        {% block content %}(no content){% endblock %}
-    </div>
-</div>
-<div class="bg-700">
-    <div class="container text-center text-xs mt-4">
-        <div>
+<header class="container">
+    <div class="row mt-3">
+        <div class="col-sm-6">
             <img src="{% static "images/CRS4-colori-small.png" %}" alt="crs4-logo">
         </div>
+        <div class="col-sm-6 text-right mt-4">
+        <div class="btn-group" role="group" aria-label="Main Menu">
+            <a href="{% url 'home' %}"
+               class="btn btn-secondary  border-light{% if request.path == '/' %} active{% endif %}">Home</a>
+            <div class="btn-group" role="group">
+                <button id="btnGroupPipelines" type="button"
+                        class="btn btn-secondary border-light  dropdown-toggle {% if 'pipelines' in request.path %} active{% endif %}"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Pipelines
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start"
+                     style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 36px, 0px);">
+                    <a class="dropdown-item {% if 'browse' in request.path %} text-info {% endif %}" href="{% url 'pipelines.browse' %}">Browse</a>
+                    <a class="dropdown-item" href="#">Add new</a>
+                    <a class="dropdown-item" href="#">Refresh</a>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary border-light">Docs</button>
+            <button type="button" class="btn btn-secondary  border-light">About</button>
+        </div>
+        </div>
+    </div>
+
+</header>
+<body >
+<div id="solida-gui" class="container">
+    <div class="row justify-content-center mt-3">
+        {% block content %}(no content){% endblock %}
     </div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" id="spinnerModal">

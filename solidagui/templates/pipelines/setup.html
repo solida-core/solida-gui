@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card border-light">
-    <div class="card-header"><h5><a href="{{ pipeline.url }}" target="_blank"> {{ pipeline.short_url }}</a></h5></div>
-    <div class="card-body ">
+<div class="card border-primary mb-2">
+    <div class="card-header bg-primary"><h5><a href="{{ pipeline.url }}" target="_blank" class="text-white"> {{ pipeline.short_url }}</a></h5></div>
+    <div class="card-body bg-secondary">
         <h4 class="card-title">{{ pipeline.id }}</h4>
         <p class="card-text">{{ pipeline.description }}</p>
         <form id="setupProfile" class="needs-validation"
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row border border-info" >
+                <div class="row border border-info bg-light">
                             <div class="col-sm-12 mt-2"><h5 class="text-warning">Remote Section</h5></div>
                             <div class="form-row col-sm-12 mb-3">
                                 {% for k,v in profile.remote_section.items %}
@@ -73,7 +73,7 @@
                                  {% endfor %}
                             </div>
                 </div>
-                <div class="row border border-info mt-2">
+                <div class="row border border-info mt-2 bg-light">
                     <div class="col-sm-12 mt-2"><h5 class="text-warning">Project Section</h5></div>
                      {% for k,v in profile.project_section.items %}
                             <div class="form-group col-sm-6">
@@ -87,7 +87,7 @@
                             </div>
                             {% endfor %}
                 </div>
-                <div class="row border border-info mt-2">
+                <div class="row border border-info mt-2 bg-light">
                     <div class="col-sm-12 mt-2"><h5 class="text-warning">Vars Section</h5></div>
                     {% for k,v in profile.vars_section.items %}
                             {% if 'project_' not in k %}
