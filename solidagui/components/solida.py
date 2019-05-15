@@ -19,6 +19,9 @@ class Solida(object):
                                             user=user,
                                             connection=connection)
 
+    def refresh(self):
+        return self.launcher.refresh()
+
 
 class Launcher(object):
     def __init__(self, loglevel='INFO'):
@@ -39,7 +42,11 @@ class Launcher(object):
         cmd = self.__get_cmd(self.deploy_project.__name__, params)
         return self.__run(cmd=cmd)
 
-    def __get_cmd(self, cmd, params):
+    def refresh(self):
+        cmd = self.__get_cmd(self.refresh.__name__)
+        return self.__run(cmd=cmd)
+
+    def __get_cmd(self, cmd, params=dict()):
         cmds = dict(
             create_profile=["solida setup",
                             "-l {}".format(params.get('pipeline_id')),
@@ -54,6 +61,7 @@ class Launcher(object):
                             "--remote-user {}".format(params.get('user')),
                             "--connection {}".format(params.get('connection'))],
 
+            refresh=['solida refresh'],
         )
 
         return cmds.get(cmd)

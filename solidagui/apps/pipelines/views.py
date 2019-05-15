@@ -2,8 +2,10 @@ from django.views.generic.base import TemplateView
 from components.pipelines import Pipelines, Pipeline
 from django.conf import settings
 
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import loader, RequestContext
+
 
 class BrowseView(TemplateView):
     template_name = 'pipelines/browse.html'
@@ -20,6 +22,11 @@ class BrowseView(TemplateView):
         context = super(BrowseView, self).get_context_data(**kwargs)
         context['pipelines'] = self.get_pipelines_layout(Pipelines().pipelines)
         return context
+
+
+def refresh(request):
+    Pipelines().refresh_pipelines()
+    return redirect('/pipelines/browse/')
 
 
 def setup(request, pipeline_id):

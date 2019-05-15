@@ -37,7 +37,7 @@
                      style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 36px, 0px);">
                     <a class="dropdown-item {% if 'browse' in request.path %} text-info {% endif %}" href="{% url 'pipelines.browse' %}">Browse</a>
                     <a class="dropdown-item" href="#">Add new</a>
-                    <a class="dropdown-item" href="#">Refresh</a>
+                    <a class="dropdown-item" href="#" onclick="refresh()">Refresh</a>
                 </div>
             </div>
             <button type="button" class="btn btn-secondary border-light">Docs</button>
@@ -66,5 +66,12 @@
         </div>
     </div>
 </div>
+<script>
+function refresh() {
+    href="{% url 'pipelines.refresh' %}";
+    $('#spinnerModal').modal('show');
+    window.location.href = href;
+}
+</script>
 </body>
 </html>

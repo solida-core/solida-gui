@@ -66,4 +66,7 @@ class Pipelines(object):
     def count_pipelines(self):
         return len(self.pipelines)
 
+    def refresh_pipelines(self):
+        return Solida().refresh()
+
 
