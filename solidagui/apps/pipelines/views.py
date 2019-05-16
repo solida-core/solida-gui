@@ -29,6 +29,11 @@ def refresh(request):
     return redirect('/pipelines/browse/')
 
 
+def add_new(request):
+    template = loader.get_template('pipelines/add_new.html')
+    context = dict()
+    return HttpResponse(template.render(context, request))
+
 def setup(request, pipeline_id):
     template = loader.get_template('pipelines/setup.html')
 
