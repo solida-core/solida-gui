@@ -21,5 +21,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomeView.as_view(), name='home'),
+    path('docs', views.DocsView.as_view(), name='docs'),
+    path('about', views.AboutView.as_view(), name='about'),
     path('pipelines/', include('apps.pipelines.urls')),
 ]

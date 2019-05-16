@@ -35,12 +35,17 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start"
                      style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 36px, 0px);">
-                    <a class="dropdown-item {% if 'browse' in request.path %} text-info {% endif %}" href="{% url 'pipelines.browse' %}">Browse</a>
+                    <a class="dropdown-item {% if 'browse' in request.path %} text-info {% endif %}"
+                       href="{% url 'pipelines.browse' %}">Browse</a>
+                    <a class="dropdown-item {% if 'browse' in request.path %} text-info {% endif %}"
+                       href="{% url 'pipelines.add_new' %}">Add new</a>
                     <a class="dropdown-item" href="#" onclick="refresh()">Refresh</a>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary border-light">Docs</button>
-            <button type="button" class="btn btn-secondary  border-light">About</button>
+            <a class="btn btn-secondary border-light {% if 'docs' in request.path %} active {% endif %}"
+               href="{% url 'docs' %}">Docs</a>
+            <a class="btn btn-secondary border-light {% if 'about' in request.path %} active {% endif %}"
+               href="{% url 'about' %}">About</a>
         </div>
         </div>
     </div>
