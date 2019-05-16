@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
     <!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/darkly/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-w+8Gqjk9Cuo6XH9HKHG5t5I1VR4YBNdPt/29vwgfZR485eoEJZ8rJRbm3TR32P6k" crossorigin="anonymous">
+   <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/spacelab/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-sZG5VVk41YqhJjYXgJFoRVd3d2AdDgy4oyIytQJMGx/Mizz1N+5bgKQBSCGfKQnP" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -19,37 +19,38 @@
             crossorigin="anonymous"></script>
     <title>solida</title>
 </head>
-<header class="container">
-    <div class="row mt-3">
+<header class="border-bottom">
+    <div class="container">
+    <div class="row mt-3 mb-3">
         <div class="col-sm-6">
             <img src="{% static "images/CRS4-colori-small.png" %}" alt="crs4-logo">
         </div>
         <div class="col-sm-6 text-right mt-4">
         <div class="btn-group" role="group" aria-label="Main Menu">
             <a href="{% url 'home' %}"
-               class="btn btn-secondary  border-light{% if request.path == '/' %} active{% endif %}">Home</a>
+               class="btn btn-primary  border-light {% if request.path == '/' %} active {% endif %}">Home</a>
             <div class="btn-group" role="group">
                 <button id="btnGroupPipelines" type="button"
-                        class="btn btn-secondary border-light  dropdown-toggle {% if 'pipelines' in request.path %} active{% endif %}"
+                        class="btn btn-primary border-light  dropdown-toggle {% if 'pipelines' in request.path %} active{% endif %}"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Pipelines
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start"
                      style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 36px, 0px);">
                     <a class="dropdown-item {% if 'browse' in request.path %} text-info {% endif %}"
                        href="{% url 'pipelines.browse' %}">Browse</a>
-                    <a class="dropdown-item {% if 'browse' in request.path %} text-info {% endif %}"
+                    <a class="dropdown-item {% if 'add_new' in request.path %} text-info {% endif %}"
                        href="{% url 'pipelines.add_new' %}">Add new</a>
                     <a class="dropdown-item" href="#" onclick="refresh()">Refresh</a>
                 </div>
             </div>
-            <a class="btn btn-secondary border-light {% if 'docs' in request.path %} active {% endif %}"
+            <a class="btn btn-primary border-light {% if 'docs' in request.path %} active {% endif %}"
                href="{% url 'docs' %}">Docs</a>
-            <a class="btn btn-secondary border-light {% if 'about' in request.path %} active {% endif %}"
+            <a class="btn btn-primary border-light {% if 'about' in request.path %} active {% endif %}"
                href="{% url 'about' %}">About</a>
         </div>
         </div>
     </div>
-
+</div>
 </header>
 <body >
 <div id="solida-gui" class="container">
@@ -60,13 +61,13 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="spinnerModal">
     <div class="modal-dialog modal-dialog-centered text-center" role="document">
         <div class="modal-body">
-            <h1>Wait while loading...</h1>
+            <h1 class="text-while">Wait while loading...</h1>
             <div class="spinner-border text-info"
                  style="width: 5rem; height: 5rem;"
                  role="status">
                 <span class="sr-only">Loading...</span>
             </div>
-            <h3>It may take a long time</h3>
+            <h3 class="text-white">It may take a long time</h3>
         </div>
     </div>
 </div>

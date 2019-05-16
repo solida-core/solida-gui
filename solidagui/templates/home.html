@@ -2,20 +2,20 @@
 
 {% block content %}
 <div class="row pr-3 pl-3">
-        <div class="col-sm-4 text-center pt-2 border border-primary rounded-left" style="width:50rem;">
-            <h1><kbd>s o l i d a</kbd></h1>
+        <div class="col-sm-4 text-center card-footer pt-3 border border-primary rounded-left" style="width:50rem;">
+            <h1 class="text-primary mt-2">s&nbsp;&nbsp;o&nbsp;&nbsp;l&nbsp;&nbsp;i&nbsp;&nbsp;d&nbsp;&nbsp;a</h1>
         </div>
-        <div class="col-sm-8 bg-primary text-justify pt-2  border border-primary rounded-right" style="width:50rem;">
+        <div class="col-sm-8 bg-primary text-justify pt-2  border border-primary rounded-right text-white" style="width:50rem;">
             <p>solida is a powerful solution that facilitate the reproducibility
             and portability of NGS pipelines.</p>
-             <p><h6>It can easily organize the deployment, the data management and the
+             <p><h6 class="text-white">It can easily organize the deployment, the data management and the
             execution of a Snakemake based workflow.</h6> </p>
         </div>
 </div>
 <div class="row mt-3">
     <div class="col-sm-6">
-        <div class="card border-primary" style="max-width: 100rem; height:33rem;">
-            <div class="card-header bg-primary lead">checkmate in 3 moves</div>
+        <div class="card border-primary" style="max-width: 100rem; height:37rem;">
+            <div class="card-header bg-primary lead text-white">checkmate in 3 moves</div>
             <div class="card-body">
                 <p class="card-text lead mt-5">
                 <h3><span class="badge badge-primary ml-5 mr-2">1</span>Select the pipeline</h3>
@@ -25,26 +25,26 @@
                  <p class="card-text lead mt-5">
                     <h3><span class="badge badge-primary ml-5 mr-2">3</span>Deploy</p>
             </div>
-            <div class="card-footer bg-light text-center">
-                <a  href="{% url 'pipelines.browse' %}" class="btn btn-success btn-lg btn-block">Start</a>
+            <div class="card-footer text-center">
+                <a  href="{% url 'pipelines.browse' %}" class="btn btn-primary btn-lg btn-block">Start</a>
             </div>
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="card border-primary  bg-light" style="max-width: 100rem; height:16rem;">
-            <div class="card-header bg-primary lead">solida-core</div>
+        <div class="card border-primary" style="max-width: 100rem; height:18rem;">
+            <div class="card-header bg-primary lead text-white">solida-core</div>
             <div class="card-body">
                 <p class="card-text text-justify">solida-core is a robust, and ready-to-use collection of extensively
                     validated bioinformatic pipelines which are routinely used for complex large-scale genetic analysis
                     at the CRS4 <a href="http://next.crs4.it" target="_blank">Next Generation Sequencing Core
                         Facility</a>, one of the largest sequencing facilities in Italy.</p>
             </div>
-            <div class="card-footer bg-light text-right">
+            <div class="card-footer text-right">
                 <a href="https://github.com/solida-core" class="btn btn-primary" target="_blank">View</a>
             </div>
         </div>
-        <div class="card border-primary bg-light mt-3" style="max-width: 100rem; height:16rem;">
-             <div class="card-header bg-primary lead">pipelines</div>
+        <div class="card border-primary mt-3" style="max-width: 100rem; height:18rem;">
+             <div class="card-header bg-primary lead text-white">pipelines</div>
             <div class="card-body">
                 <p class="card-text text-justify">
                     All <a href="https://github.com/solida-core" target="_blank">solida-core</a>
@@ -54,7 +54,7 @@
                     research sequencing projects.
                 </p>
             </div>
-            <div class="card-footer bg-light text-right">
+            <div class="card-footer text-right">
                 <a href="https://github.com/solida-core" class="btn btn-primary" target="_blank">View</a>
             </div>
         </div>

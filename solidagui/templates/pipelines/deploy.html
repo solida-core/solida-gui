@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card text-white {% if result.success %} bg-success {% else %} bg-danger {% endif %}">
-    <div class="card-header">
+<div class="card text-white border {% if result.success %} border-success {% else %} border-danger {% endif %}">
+    <div class="card-header {% if result.success %} bg-success {% else %} bg-danger {% endif %}">
         <h5>Deployment of Pipeline <kbd>{{ pipeline.id }}</kbd> with Profile <kbd>{{ profile.id }}</kbd>
         </h5>
     </div>
     <div class="card-body">
-        <h4 class="card-title">{% if result.success %} Successful! {% else %} Failed! {% endif %}</h4>
-        <div class="card-text">
-
+        <h4 class="card-title {% if result.success %} text-success {% else %} text-danger {% endif %}">
+            {% if result.success %} Successful! {% else %} Failed! {% endif %}</h4>
+        <div class="card-text"><br/>
             {{ result.last_row }}
-            <button class="btn btn-secondary" data-toggle="modal" data-target="#ModalLog">View details</button>
+        </div>
+        <div class="card-footer pull-right">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#ModalLog">View details</button>
         </div>
     </div>
 </div>
@@ -26,11 +28,11 @@
       </div>
       <div class="modal-body">
           {% for row in result.stdout_data %}
-            <div class="row"><pre class="text-white small">{{ row }}</pre></div>
+            <div class="row"><pre class="small">{{ row }}</pre></div>
           {% endfor %}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
