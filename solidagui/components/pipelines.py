@@ -69,4 +69,20 @@ class Pipelines(object):
     def refresh_pipelines(self):
         return Solida().refresh()
 
+    def add_new_pipeline(self, pipeline_dict):
+        conf = SolidaConfigFile(yaml_file=settings.SOLIDA_CONFIG_FILE)
+        conf.add_new_pipeline(self.__retrieve(pipeline_dict))
+        conf.dump()
+        Solida().info()
+
+    def __retrieve(self, pipeline_dict):
+        return dict(label=pipeline_dict.get('label'),
+                    url=pipeline_dict.get('url'),
+                    description=pipeline_dict.get('description'),
+                    type=pipeline_dict.get('type') if pipeline_dict.get('type') else settings.SOLIDA_PIPELINE_TYPE,
+                    playbook=pipeline_dict.get('playbook') if pipeline_dict.get('playbook') else settings.SOLIDA_PIPELINE_PLAYBOOK,
+                    playbook_vars_template=pipeline_dict.get('vars')
+                    )
+
+
 

@@ -22,6 +22,9 @@ class Solida(object):
     def refresh(self):
         return self.launcher.refresh()
 
+    def info(self):
+        return self.launcher.info()
+
 
 class Launcher(object):
     def __init__(self, loglevel='INFO'):
@@ -46,6 +49,10 @@ class Launcher(object):
         cmd = self.__get_cmd(self.refresh.__name__)
         return self.__run(cmd=cmd)
 
+    def info(self):
+        cmd = self.__get_cmd(self.info.__name__)
+        return self.__run(cmd=cmd)
+
     def __get_cmd(self, cmd, params=dict()):
         cmds = dict(
             create_profile=["solida setup",
@@ -62,6 +69,7 @@ class Launcher(object):
                             "--connection {}".format(params.get('connection'))],
 
             refresh=['solida refresh'],
+            info=['solida info'],
         )
 
         return cmds.get(cmd)

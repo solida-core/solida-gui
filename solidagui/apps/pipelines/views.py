@@ -6,6 +6,8 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import loader, RequestContext
 
+import json
+
 
 class BrowseView(TemplateView):
     template_name = 'pipelines/browse.html'
@@ -24,15 +26,28 @@ class BrowseView(TemplateView):
         return context
 
 
-def refresh(request):
+def refresh():
     Pipelines().refresh_pipelines()
     return redirect('/pipelines/browse/')
 
 
 def add_new(request):
-    template = loader.get_template('pipelines/add_new.html')
-    context = dict()
-    return HttpResponse(template.render(context, request))
+    params = request.POST.dict()
+    if not params.get('to_do'):
+        template = loader.get_template('pipelines/add_new.html')
+        context = dict()
+        return HttpResponse(template.render(context, request))
+    else:
+
+        pipeline_dict = dict(
+            label=params.get('label'),
+            url=params.get('url'),
+            description=params.get('description'),
+            vars=json.loads(params.get('custom_vars'))
+        )
+        Pipelines().add_new_pipeline(pipeline_dict=pipeline_dict)
+        return redirect('/pipelines/{}/setup/'.format(pipeline_dict.get('label')))
+
 
 def setup(request, pipeline_id):
     template = loader.get_template('pipelines/setup.html')
