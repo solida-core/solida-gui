@@ -76,6 +76,18 @@ class SolidaConfigFile(YamlConfigFile):
     def get_vars_section(self, label='default_vars'):
         return self.get_section(label)
 
+    def add_new_pipeline(self, pipeline_dict):
+        pipeline_section = self.get_pipelines_section()
+        pipeline_section.update({pipeline_dict.get('label'): pipeline_dict})
+        self.set_pipelines_section(pipeline_section)
+
+    def set_pipelines_section(self, pipeline_section):
+        self.set_section(section_label='pipelines', section_dict=pipeline_section)
+
+    def __set_section(self, section):
+        for k, v in section.items():
+            self.set_value(k, v)
+
 
 class ProfileConfigFile(YamlConfigFile):
     def __init__(self, yaml_file, loglevel='INFO'):

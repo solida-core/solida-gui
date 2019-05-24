@@ -1,14 +1,158 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
 {% block content %}
-<div class="card border-warning mb-4" style="width: 30rem;">
-    <div class="card-header bg-warning lead">&nbsp;</div>
+<div class="row">
+    <div class="card border-primary mb-2" style="width:70em;">
+        <div class="card-header bg-primary text-white"><h5>Add a new pipeline from repository</h5></div>
+        <div class="card-body">
+            <h4 class="card-title"></h4>
+            <form id="addNewPipeline" class="needs-validation"
+                  method="post" novalidate>
+                {% csrf_token %}
+                <fieldset>
+                    <input type="hidden" id="to_do" name="to_do">
+                    <input type="hidden" id="custom_vars" name="custom_vars">
+                    <div class="col-md-12 border border-info">
+                        <div class="row col-md-12 mt-2"><h5 class="text-warning">General Section</h5></div>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label class="col-form-label" for="label">Label <span
+                                        class="text-info"> (Required)</span></label>
+                                <input type="text" class="form-control form-control-sm" id="label"
+                                       name="label"
+                                       placeholder="Type here the pipeline label..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Field required. Please type a valid pipeline label.
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-form-label" for="url">Repository url <span class="text-info"> (Required)</span></label>
+                                <input type="text" class="form-control form-control-sm" id="url"
+                                       name="url"
+                                       placeholder="Type here the pipeline url..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Field required. Please type a valid pipeline url.
+                                </div>
+                            </div>
 
-  <img class="card-img-top" src="{% static "images/wip.jpg" %}" alt="Card image cap">
-  <div class="card-body">
-    <p class="card-text">coming soon..</p>
-  </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-12 mb-3">
+                                <label class="col-form-label" for="description">Description <span class="text-info"> (Required)</span></label>
+                                <textarea class="form-control form-control-sm" id="description"
+                                          name="description"
+                                          placeholder="Type here the pipeline description..."
+                                          row="11" style="height:10rem;"
+                                          required></textarea>
+                                <div class="invalid-feedback">
+                                    Field required. Please type a valid pipeline label.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 border border-info mt-3">
+
+                        <div class="row col-md-12 mt-2"><h5 class="text-warning">Custom Vars</h5></div>
+                        <div class="row">
+                            <div class="form-group col-sm-6 mb-3">
+                                 <label class="col-form-label" for="vars.keys[1]">Label</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       id="vars.keys[1]" name="vars.keys[1]" placeholder="Type here the label of the 1&#176; parameter">
+                            </div>
+                            <div class="form-group col-sm-6 mb-3">
+                                <label class="col-form-label" for="vars.values[1]">Default Value</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       id="vars.values[1]" name="vars.values[1]" placeholder="Type here the default value of the 1&#176; parameter">
+                            </div>
+                        </div>
+                        <div id="optional_vars">
+
+                         </div>
+                         <div class="row text-right">
+                             <div class="form-group col-sm-12 mb-3">
+                                 <button class="btn btn-success" onclick="return add_var(event);"><i class="fa fa-plus-circle"></i></button>
+                             </div>
+                         </div>
+                    </div>
+                    <div class="row text-right mt-3">
+                        <div class="form-group col-sm-12">
+                        <button class="btn btn-primary" onclick="return add_pipeline(event);">Add Pipeline</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
 </div>
+<script>
+    $(document).ready(function(){
+        var index = 1;
+        $('#spinnerModal').modal('hide');
+    });
+
+    var index = 1;
+    function add_var(e) {
+        e.preventDefault();
+        index++;
+        var html = '<div class="row">' +
+            '<div class="form-group col-sm-6 mb-3">' +
+            '<label class="col-form-label" for="vars.keys['+index+']">Label</label>' +
+            '<input type="text" class="form-control form-control-sm" id="vars.keys['+index+']" ' +
+            'name="vars.keys['+index+']" placeholder="Type here the label of the '+index+'&#176; parameter"></div>' +
+            '<div class="form-group col-sm-6 mb-3">' +
+            '<label class="col-form-label" for="vars.values['+index+']">Default Value</label>' +
+            '<input type="text" class="form-control form-control-sm" id="vars.values['+index+']" ' +
+            'name="vars.values['+index+']" placeholder="Type here the default value of the '+index+'&#176; parameter"></div>' +
+            '</div>';
+
+        $('#optional_vars').append(html);
+    }
+
+     function add_pipeline(e) {
+        e.preventDefault();
+         this.check = checkup();
+
+        if (this.check) {
+            $('#spinnerModal').modal('show');
+            $('#to_do').val("add_new_profile");
+            $("#addNewPipeline").attr('action', '/pipelines/add_new/');
+            var values = [];
+            var keys = [];
+            var vars = {};
+            $('input[name^="vars.keys"]').each(function() {
+                keys.push($(this).val());
+            });
+            $('input[name^="vars.values"]').each(function() {
+                values.push($(this).val());
+            });
+            for (i = 0; i < keys.length; i++) {
+                vars[keys[i]] = values[i];
+            }
+            $('#custom_vars').val(JSON.stringify(vars));
+            $("#addNewPipeline").submit();
+        }
+
+     }
+
+     function checkup() {
+        var check = true;
+
+        $(':input[required]').each(function(i, requiredField) {
+            if ( $(requiredField).val().trim() == "" ) {
+                $(requiredField).removeClass("is-valid");
+                $(requiredField).addClass("is-invalid");
+                check = false;
+            }
+            else {
+                 $(requiredField).removeClass("is-invalid");
+                 $(requiredField).addClass("is-valid");
+            }
+        });
+        return check;
+    }
+</script>
+
 
 {% endblock %}
-<img src="{% static "images/wip1.jpeg" %}" alt="work_in_progress">

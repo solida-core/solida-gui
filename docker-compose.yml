@@ -11,6 +11,7 @@ services:
       - ~/solida-core/projects:/root/projects
       - ~/solida-core/.tmp:/root/.tmp
       - ~/solida-core/profiles:/root/.local/share/solida/
+      - ~/solida-core/config:/root/.config/solida
       - .:/kode
       - ~/.ssh:/root/.ssh:ro
 

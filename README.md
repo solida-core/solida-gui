@@ -15,11 +15,14 @@ You need [docker-engine](https://docs.docker.com/engine/installation/)
 and [docker-compose](https://docs.docker.com/compose/install/)  
 See [docker-compose docs](https://docs.docker.com/compose/reference/overview/)
 
+For deploying in remote host see [sss-keygen](https://www.ssh.com/ssh/keygen/)
+
 ## Quick start
 
 Create the workdir tree:
 ```bash
 mkdir ~/solida-core             # root path 
+mkdir ~/solida-core/config      # path for configuration files
 mkdir ~/solida-core/projects    # path where deploying projects in localhost
 mkdir ~/solida-core/profiles    # path where storing profiles in localhost
 mkdir ~/solida-core/.tmp        # path where storing temporary files 
@@ -32,8 +35,9 @@ mkdir ~/solida-core/.tmp        # path where storing temporary files
 >      - ~/solida-core/projects:/root/projects
 >      - ~/solida-core/.tmp:/root/.tmp
 >      - ~/solida-core/profiles:/root/.local/share/solida/
+>      - ~/solida-core/config:/root/.config/solida
 > ...
-```
+
 
 Clone the repository:  
 ```bash
