@@ -73,7 +73,7 @@ class Pipelines(object):
         conf = SolidaConfigFile(yaml_file=settings.SOLIDA_CONFIG_FILE)
         conf.add_new_pipeline(self.__retrieve(pipeline_dict))
         conf.dump()
-        Solida().info()
+        return Solida().info()
 
     def __retrieve(self, pipeline_dict):
         return dict(label=pipeline_dict.get('label'),
