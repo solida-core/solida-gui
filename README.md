@@ -37,6 +37,7 @@ mkdir ~/solida-core/.tmp        # path where storing temporary files
 >      - ~/solida-core/profiles:/root/.local/share/solida/
 >      - ~/solida-core/config:/root/.config/solida
 > ...
+> ```
 
 
 Clone the repository:  
