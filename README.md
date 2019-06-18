@@ -46,24 +46,28 @@ mkdir ~/solida-core             # root path
 mkdir ~/solida-core/config      # path for configuration files
 mkdir ~/solida-core/projects    # path where deploying projects in localhost
 mkdir ~/solida-core/profiles    # path where storing profiles in localhost
-mkdir ~/solida-core/.tmp        # path where storing temporary files 
+mkdir ~/solida-core/.tmp        # path where storing temporary files
+mkdir ~/solida-core/.miniconda  # path where install miniconda
+mkdir ~/solida-core/.cache      # Solida cache path
 ```
 
 > You can change these paths as you prefer, but remember to modify docker-compose.yaml file accordly
 > ```yaml
 > ...
 > volumes:
->      - ~/solida-core/projects:/root/projects
->      - ~/solida-core/.tmp:/root/.tmp
->      - ~/solida-core/profiles:/root/.local/share/solida/
->      - ~/solida-core/config:/root/.config/solida
+>      - ~/solida-core/projects:/home/appuser/projects
+>      - ~/solida-core/.tmp:/home/appuser/.tmp
+>      - ~/solida-core/profiles:/home/appuser/.local/share/solida/
+>      - ~/solida-core/config:/home/appuser/.config/solida
+>      - ~/solida-core/.miniconda:/home/appuser/miniconda
+>      - ~/solida-core/.cache:/home/appuser/.cache
 > ...
 > ```
 
 
 Clone the repository:  
 ```bash
-git clone https://github.com/ratzeni/solida-gui.git
+git clone https://github.com/solida-core/solida-gui.git
 ```
 
 Cd into the docker directory:  
