@@ -6,7 +6,7 @@ of a Snakemake based workflow
 
 solida-gui container include:
 - [solida](https://github.com/solida-core/solida): Python command-line tool 
-- Graphical User Iterface developed in Django
+- Graphical User Interface developed in Django
 
 
 ## Requirements
