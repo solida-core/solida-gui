@@ -3,17 +3,25 @@ version: '3'
 services:
 #  db:
 #    image: postgres
+  web_build:
+    image: solida-gui_web
+    build:
+      context: .
+      dockerfile: Dockerfile
+
   web:
-    build: .
+    image: solida-gui_web
     command: >
       bash -c "sh init_conda.sh && sh start_django.sh"
     volumes:
-      - ~/solida-core/projects:/root/projects
-      - ~/solida-core/.tmp:/root/.tmp
-      - ~/solida-core/profiles:/root/.local/share/solida/
-      - ~/solida-core/config:/root/.config/solida
+      - ~/solida-core/projects:/home/appuser/projects
+      - ~/solida-core/.tmp:/home/appuser/.tmp
+      - ~/solida-core/profiles:/home/appuser/.local/share/solida/
+      - ~/solida-core/config:/home/appuser/.config/solida
+      - ~/solida-core/.miniconda:/home/appuser/miniconda
+      - ~/solida-core/.cache:/home/appuser/.cache/solida
       - .:/kode
-      - ~/.ssh:/root/.ssh:ro
+      - ~/.ssh:/home/appuser/.ssh:ro
 
     ports:
       - "8000:8000"

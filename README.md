@@ -15,9 +15,30 @@ You need [docker-engine](https://docs.docker.com/engine/installation/)
 and [docker-compose](https://docs.docker.com/compose/install/)  
 See [docker-compose docs](https://docs.docker.com/compose/reference/overview/)
 
-For deploying in remote host see [sss-keygen](https://www.ssh.com/ssh/keygen/)
+For deploying in remote host see [ssh-keygen](https://www.ssh.com/ssh/keygen/)
 
-## Quick start
+## Quickstart
+
+The first execution could require several minutes, from the second one will be faster.
+
+### Using the Makefile
+
+Print the help message
+```bash
+make help
+```
+
+Bring up the solida-gui app
+```bash
+make start
+```
+
+Bring down the solida-gui app
+```bash
+make stop
+```
+
+### Manually
 
 Create the workdir tree:
 ```bash
