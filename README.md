@@ -82,3 +82,5 @@ docker-compose up
 
 Point your browser to: 
 `http://0.0.0.0:8000` 
+
+Configure and add you pipelines!
