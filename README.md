@@ -1,4 +1,5 @@
 # solida-gui
+[![Travis](https://api.travis-ci.com/solida-core/solida-gui.svg?branch=master)](https://travis-ci.com/solida-core/solida-gui)
 
 Container Docker application that facilitate the reproducibility and portability of NGS pipelines.
 It can easily organize the deployment, the data management and the execution 

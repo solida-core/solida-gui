@@ -6,3 +6,4 @@ then
 fi
 
 /home/appuser/miniconda/bin/conda update conda -y
+/home/appuser/miniconda/bin/conda install mamba -c conda-forge

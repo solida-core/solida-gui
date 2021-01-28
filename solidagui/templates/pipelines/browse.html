@@ -10,8 +10,9 @@
     <div class="card-deck">
         {% for p in pp %}
         <div class="col-sm-6 mb-4">
-            <div class="card border-primary" style="width: 35rem; height: 16rem;">
-                <div class="card-header bg-primary lead"><a href="{{ p.url }}" target="_blank" class="text-white"> {{ p.short_url }}</a></div>
+            <div class="card border-primary" style="width: 35rem; height: 15rem;">
+                <div class="card-header bg-primary text-right lead">
+                    <a href="{{ p.url }}" target="_blank" class="text-white"> {{ p.short_url }}</a></div>
                 <div class="card-body">
                     <h4 class="card-title">{{ p.id }}</h4>
                     <p class="card-text">{{ p.description }}</p>

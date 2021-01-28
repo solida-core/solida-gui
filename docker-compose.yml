@@ -11,6 +11,7 @@ services:
 
   web:
     image: solida-gui_web
+    container_name: sg01
     command: >
       bash -c "sh init_conda.sh && sh start_django.sh"
     volumes:
@@ -22,9 +23,6 @@ services:
       - ~/solida-core/.cache:/home/appuser/.cache/solida
       - .:/kode
       - ~/.ssh:/home/appuser/.ssh:ro
-
     ports:
       - "8000:8000"
-#    depends_on:
-#      - db
 

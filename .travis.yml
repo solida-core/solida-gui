@@ -1,0 +1,11 @@
+language: python
+
+services:
+  - docker
+
+script:
+  - make start
+  - docker exec sg01 python /kode/solidagui/manage.py check
+  - docker exec sg01 python /kode/solidagui/manage.py test
+  - make stop
+  - make clean

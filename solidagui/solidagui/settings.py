@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'extended_settings',
-    'pagination_bootstrap',
+    'django_pagination_bootstrap',
     'solidagui',
 ]
 
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'pagination_bootstrap.middleware.PaginationMiddleware',
+    'django_pagination_bootstrap.middleware.PaginationMiddleware',
 ]
 
 ROOT_URLCONF = 'solidagui.urls'
